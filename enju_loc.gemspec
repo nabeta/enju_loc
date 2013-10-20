@@ -7,17 +7,27 @@ require "enju_loc/version"
 Gem::Specification.new do |s|
   s.name        = "enju_loc"
   s.version     = EnjuLoc::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
+  s.authors     = ["Masao Takaku, Kosuke Tanabe"]
+  s.email       = ["kosuke@e23.jp"]
   s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of EnjuLoc."
-  s.description = "TODO: Description of EnjuLoc."
+  s.summary     = "enju_loc plugin"
+  s.description = "import bibliographic records from LoC for Next-L Enju"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/log/*"] - Dir["spec/dummy/solr/{data,pids}/*"]
 
-  s.add_dependency "rails", "~> 3.2.13"
+  s.add_dependency "rails", "~> 3.2.15"
+  s.add_dependency "nokogiri"
+  s.add_dependency "lisbn"
+  s.add_dependency "library_stdnums"
   # s.add_dependency "jquery-rails"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "vcr"
+  s.add_development_dependency "fakeweb"
+  #s.add_development_dependency "enju_leaf", "~> 1.1.0.rc5"
+  #s.add_development_dependency "enju_question", "~> 0.1.0.pre8"
+  s.add_development_dependency "sunspot_solr", "~> 2.0.0"
+  s.add_development_dependency "simplecov"
 end
