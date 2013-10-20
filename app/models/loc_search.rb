@@ -50,7 +50,7 @@ class LocSearch
 
   LOC_SRU_BASEURL = "http://lx2.loc.gov:210/LCDB"
   def self.search( query, options = {} )
-    if query
+    if query and not query.empty?
       if options[ :page ]
         page = options[ :page ].to_i
         options[ :startRecord ] = ( page - 1 ) * 10 + 1
@@ -68,6 +68,20 @@ class LocSearch
       items = doc.search( '//zs:record' ).map{|e| ModsRecord.new e }
       @results = { :items => items,
                    :total_entries => doc.xpath( '//zs:numberOfRecords' ).first.content.to_i }
+    else
+      { :items => [], :total_entries => 0 }
     end
   end
+
+  def self.import_from_sru_response( lccn )
+    identifier = Identifier.where(:body => lccn, :identifier_type_id => IdentifierType.where(:name => 'lccn').first_or_create.id).first
+    return if identifier
+    url = "#{ LOC_SRU_BASEURL }?operation=searchRetrieve&recordSchema=mods&&maximumRecords=1&&query=%28lccn=#{ lccn }%29"
+    xml = open(url).read
+    response = Nokogiri::XML(xml).at( '//zs:recordData' )
+    return unless response.try( :content )
+    doc = Nokogiri::XML( response.content )
+    Manifestation.import_record_from_loc( doc )
+  end
 end
+

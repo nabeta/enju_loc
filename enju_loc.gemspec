@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.name        = "enju_loc"
   s.version     = EnjuLoc::VERSION
   s.authors     = ["Masao Takaku, Kosuke Tanabe"]
-  s.email       = ["kosuke@e23.jp"]
-  s.homepage    = "TODO"
-  s.summary     = "enju_loc plugin"
-  s.description = "import bibliographic records from LoC for Next-L Enju"
+  s.email       = ["tmasao@acm.org", "kosuke@e23.jp"]
+  s.homepage    = "https://github.com/masao/enju_loc"
+  s.summary     = "LoC SRU wrapper for Next-L Enju"
+  s.description = "This module allow users to search and import bibliographic records from Library of Congress via SRU-based API."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"] - Dir["spec/dummy/log/*"] - Dir["spec/dummy/solr/{data,pids}/*"]
